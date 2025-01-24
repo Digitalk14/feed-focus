@@ -1,9 +1,12 @@
-import { LeftMenu } from "@/components";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+import { LeftMenu, Main } from "@/components";
 
 export default async function DashboardPage() {
   return (
-    <LeftMenu><p>Dashboard</p></LeftMenu>
+    <>
+      <LeftMenu />
+      <Main>
+        <p>Dashboard</p>
+      </Main>
+    </>
   );
 }

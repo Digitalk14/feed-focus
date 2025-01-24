@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@edge-runtime/cookies": "^6.0.0",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.16",
     "next": "15.1.5",

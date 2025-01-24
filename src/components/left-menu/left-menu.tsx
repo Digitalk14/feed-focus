@@ -1,14 +1,16 @@
 import React from "react";
 import { redirect } from "next/navigation";
-import { createClient } from "@/utils/supabase/server";
+import { getUser } from "@/utils/supabase/server";
+import { createClient } from '@/utils/supabase/client'
 import { Navigation } from "@/components/navigation";
 
-export const LeftMenu = async ({ children }: { children: React.ReactNode }) => {
-  const supabase = await createClient();
+export const LeftMenu = async () => {
+  const { user, userError } = await getUser();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  if (userError) {
+    console.error(userError);
+  }
+
   if (!user) {
     return redirect("/login");
   }
@@ -23,9 +25,6 @@ export const LeftMenu = async ({ children }: { children: React.ReactNode }) => {
         {/* Navigation Menu */}
         <Navigation />
       </aside>
-
-      {/* Main Content Area */}
-      <main className="flex-1 p-8">{children}</main>
     </div>
   );
 };

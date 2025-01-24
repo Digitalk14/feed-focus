@@ -1,6 +1,6 @@
-import { createClient } from "@/utils/supabase/server";
+import { getUser, getFeed, getFeedAds } from "@/utils/supabase/server";
 import { FunctionComponent } from "react";
-import { LeftMenu } from "@/components";
+import { LeftMenu, Main } from "@/components";
 
 type PropsType = {
   params: Promise<{ slug: string }>;
@@ -8,38 +8,28 @@ type PropsType = {
 
 const Page: FunctionComponent<PropsType> = async function Page({ params }) {
   const { slug } = await params;
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: feed, error: feedError } = await supabase
-    .from("Feed")
-    .select("*")
-    .eq("created_by", user?.id)
-    .eq("id", slug);
+  const { user, userError } = await getUser();
+  const { feed, feedError } = await getFeed(user?.id, slug);
 
   if (feedError) {
     console.error(feedError);
   }
+  const { adsList, adsError } = await getFeedAds(feed?.ads);
 
-  const { data: adsList, error: adsError } = await supabase
-    .from("Ad")
-    .select()
-    .in("id", feed?.[0].ads);
-  console.log(adsList);
   if (adsError) {
     console.error(adsError);
   }
 
   return (
-    <LeftMenu>
+    <>
+      <LeftMenu />
+      <Main>
         <div>
-            <h1>{feed?.[0].title}</h1>
-            <p>{feed?.[0].description}</p>
+          <h1>{feed?.title}</h1>
+          <p>{feed?.description}</p>
         </div>
-    </LeftMenu>
-  )
+      </Main>
+    </>
+  );
 };
 export default Page;
