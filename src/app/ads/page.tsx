@@ -1,5 +1,5 @@
 import { LeftMenu, ButtonCreateNew, Main } from "@/components";
-import { getUser, getAds } from "@/utils/supabase/server";
+import { getUser, getAds } from "@/utils";
 import Link from "next/link";
 
 export default async function AdsPage() {

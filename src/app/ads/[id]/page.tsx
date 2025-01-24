@@ -1,5 +1,5 @@
 
-import { getAd } from "@/utils/supabase/server";
+import { getAd } from "@/utils";
 import { FunctionComponent } from "react";
 import { LeftMenu, Main } from "@/components";
 import Image from "next/image";

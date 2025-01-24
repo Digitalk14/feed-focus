@@ -1,4 +1,4 @@
-import { getUser, getFeeds } from "@/utils/supabase/server";
+import { getUser, getFeeds } from "@/utils";
 import Link from "next/link";
 
 export const FeedsList = async () => {

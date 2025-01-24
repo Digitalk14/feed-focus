@@ -7,11 +7,3 @@ export function createClient() {
   );
 }
 
-export async function getUser() {
-  const supabase = createClient();
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
-  return { user, userError };
-}

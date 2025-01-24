@@ -1,4 +1,4 @@
-import { getUser, getFeed, getFeedAds } from "@/utils/supabase/server";
+import { getUser, getFeed, getFeedAds } from "@/utils";
 import { FunctionComponent } from "react";
 import { LeftMenu, Main } from "@/components";
 
