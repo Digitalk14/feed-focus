@@ -1,9 +1,15 @@
 "use client";
 import { useState } from "react";
 import { Main, Button } from "@/components";
+import { ImageUpload } from "@/components";
 
 export const CreateAdWidget = () => {
   const [name, setName] = useState("");
+
+  const handleFilesSelected = (files: File[]) => {
+    // Handle the selected files here
+    console.log("Selected files:", files);
+  };
 
   return (
     <Main>
@@ -11,6 +17,7 @@ export const CreateAdWidget = () => {
         <h2 className="text-xl font-semibold mb-4">Create New Ad</h2>
         <form noValidate className="space-y-4">
           <div>
+            <ImageUpload onFilesSelected={handleFilesSelected} />
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
