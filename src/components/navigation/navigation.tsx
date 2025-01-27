@@ -1,4 +1,5 @@
 "use client"
+import { logout } from "@/app/login/actions";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,9 +12,10 @@ const links = [
 export const Navigation = () => {
   const pathname = usePathname();
   return (
-    <nav className="space-y-4">
-      {links.map((link) => (
-        <Link
+    <div className="flex flex-col justify-between h-[calc(100vh-100px)] gap-4">
+      <nav className="space-y-4">
+        {links.map((link) => (
+          <Link
           className={`flex items-center space-x-3 p-2 ${
             pathname.includes(link.href)
               ? "bg-[#585DFF] text-white rounded-[10px]"
@@ -22,9 +24,11 @@ export const Navigation = () => {
           href={link.href}
           key={link.href}
         >
-          <span>{link.label}</span>
-        </Link>
-      ))}
-    </nav>
+            <span>{link.label}</span>
+          </Link>
+        ))}
+      </nav>
+      <button className="text-[#333] text-sm text-left" onClick={logout}>Logout</button>
+    </div>
   );
 };
