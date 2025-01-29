@@ -1,15 +1,22 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { Main, ImageUpload } from "@/components";
+import { useState, FormEvent, useEffect } from "react";
+import { Main, ImageUpload, Spinner } from "@/components";
 import { uploadFiles } from "@/utils";
+import { Bounce, toast } from "react-toastify";
 
 const MAX_FILES = 2;
 
 export const CreateAdWidget = () => {
-  const [title, setTitle] = useState("title");
-  const [description, setDescription] = useState("description");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [errors, setErrors] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const notify = () => toast("Wow so easy!");
+  useEffect(() => {
+    // notify();
+  }, []);
 
   const handleFilesSelected = (files: File[]) => {
     setUploadedFiles((prev) => {
@@ -29,11 +36,29 @@ export const CreateAdWidget = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await uploadFiles(uploadedFiles);
+    setIsLoading(true);
+    const { errors } = await uploadFiles(title, description, uploadedFiles);
+    if (errors) {
+      const messages = errors.map((error) => error.message).join(", ");
+      console.log(messages);
+      toast.error(`Error uploading files: ${messages}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      console.log(errors);
+    }
+    setIsLoading(false);
   };
 
   const isSubmitDisabled = !title || !description || uploadedFiles.length === 0;
-  
+
   return (
     <Main>
       <div className="p-4">
@@ -133,12 +158,12 @@ export const CreateAdWidget = () => {
               opacity: isSubmitDisabled ? 0.5 : 1,
               cursor: isSubmitDisabled ? "not-allowed" : "pointer",
             }}
-            disabled={isSubmitDisabled}
+            disabled={isSubmitDisabled || isLoading}
             className={`flex items-center justify-center border border-[#e0e0e0] bg-[#585dff] text-white cursor-pointer hover:bg-[#4146ff] rounded-lg shadow-sm w-[200px] h-[50px] ${
               isSubmitDisabled && "opacity-50"
             }`}
           >
-            Save
+            {isLoading ? <Spinner /> : "Save"}
           </button>
         </form>
       </div>

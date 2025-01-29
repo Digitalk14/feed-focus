@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { AppProps } from "next/app";
 import Layout from "./layout";
 
