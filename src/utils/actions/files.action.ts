@@ -9,7 +9,7 @@ export async function uploadFiles(
   description: string,
   files: File[]
 ) {
-  const filePaths: string[] = [];
+  const filePaths: any[] = [];
   const errors: any[] = [];
   const supabase = await createClient();
   const {
@@ -22,8 +22,9 @@ export async function uploadFiles(
         .upload(`public/${file.name}`, file);
       if (error) {
         errors.push(error);
+      }else{
+        filePaths.push(data);
       }
-      filePaths.push(JSON.stringify(data));
     })
   );
   if (filePaths.length > 0) {
@@ -43,7 +44,6 @@ export async function uploadFiles(
     }
   }
   if (errors.length > 0) {
-    console.log(errors);
     return { errors: errors };
   } else {
     redirect("/ads");

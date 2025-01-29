@@ -40,7 +40,6 @@ export const CreateAdWidget = () => {
     const { errors } = await uploadFiles(title, description, uploadedFiles);
     if (errors) {
       const messages = errors.map((error) => error.message).join(", ");
-      console.log(messages);
       toast.error(`Error uploading files: ${messages}`, {
         position: "top-right",
         autoClose: 5000,
@@ -52,7 +51,6 @@ export const CreateAdWidget = () => {
         theme: "light",
         transition: Bounce,
       });
-      console.log(errors);
     }
     setIsLoading(false);
   };

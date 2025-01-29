@@ -14,3 +14,12 @@ export async function getAd(id: string) {
 
   return ad;
 }
+
+export async function getAdMedia(path: string) {
+  const supabase = await createClient();
+  const { data: mediaSrc } = await supabase
+    .storage
+    .from("Ads-images")
+    .getPublicUrl(path);
+  return { mediaSrc };
+}
