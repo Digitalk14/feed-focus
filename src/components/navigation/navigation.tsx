@@ -1,5 +1,5 @@
 "use client"
-import { logout } from "@/app/login/actions";
+import { logout } from "@/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

@@ -12,12 +12,12 @@ const Page: FunctionComponent<PropsType> = async function Page({ params }) {
   const { feed, feedError } = await getFeed(user?.id, slug);
 
   if (feedError) {
-    console.error(feedError);
+    console.log(feedError);
   }
   const { adsList, adsError } = await getFeedAds(feed?.ads);
 
   if (adsError) {
-    console.error(adsError);
+    console.log(adsError);
   }
 
   return (

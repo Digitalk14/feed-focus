@@ -6,7 +6,7 @@ export const FeedsList = async () => {
   const { feeds, feedsError } = await getFeeds(user?.id);
 
   if (feedsError) {
-    console.error(feedsError);
+    console.log(feedsError);
   }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">

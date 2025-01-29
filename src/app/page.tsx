@@ -1,24 +1,26 @@
 import { createClient } from "@/utils/supabase/server";
 
 export default async function Index() {
-  const canInitSupabaseClient = async () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      const supabase = await createClient();  
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+  // const canInitSupabaseClient = async () => {
+  //   // This function is just for the interactive tutorial.
+  //   // Feel free to remove it once you have Supabase connected.
+  //   try {
+  //     const supabase = await createClient();
+  //     if (await supabase.auth.getUser()) {
+  //       return true;
+  //     }
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // };
 
-  const isSupabaseConnected = await canInitSupabaseClient();
+  // const isSupabaseConnected = await canInitSupabaseClient();
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          {isSupabaseConnected && <p>Supabase connected</p>}
+          {/* {isSupabaseConnected && <p>Supabase connected</p>} */}
         </div>
       </nav>
 

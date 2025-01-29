@@ -11,7 +11,7 @@ export async function uploadFiles(files: File[]) {
       .from("Ads-images")
       .upload(file.name, file);
     if (error) {
-      console.error(error);
+      console.log(error);
     }
     console.log(data);
   });

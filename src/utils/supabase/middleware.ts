@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+const protectedRoutes = ['/dashboard', '/feeds', '/ads']
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -32,11 +34,21 @@ export async function updateSession(request: NextRequest) {
   // issues with users being randomly logged out.
 
   // IMPORTANT: DO NOT REMOVE auth.getUser()
+  const pathname = request.nextUrl.pathname
+
+  const isProtectedRoute = protectedRoutes.includes(pathname)
+
+ 
 
   const {
-    data: { user },
+    data: { user }, error
   } = await supabase.auth.getUser()
-
+  if (error) {
+    console.error(error)
+  }
+  if (isProtectedRoute && error) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
   if (
     !user &&
     !request.nextUrl.pathname.startsWith('/login') &&

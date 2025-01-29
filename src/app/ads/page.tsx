@@ -1,11 +1,15 @@
 import { LeftMenu, ButtonCreateNew, Main } from "@/components";
-import { getUser, getAds } from "@/utils";
+import { getUser, getAds, protectRoute } from "@/utils";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function AdsPage() {
   const { user, userError } = await getUser();
   const adsList = await getAds(user?.id);
-
+  // const isProtected = await protectRoute();
+  // if (!isProtected) {
+  //   return redirect("/login");
+  // }
   return (
     <>
       <LeftMenu />
