@@ -21,10 +21,10 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           setError(`File ${file.name} is too large. Maximum size is 5MB.`);
           return false;
         }
-        if (!file.type.startsWith("image/jpeg")) {
-          setError(`File ${file.name} is not a JPEG image.`);
-          return false;
-        }
+        // if (!file.type.startsWith("image/jpeg") ) {
+        //   setError(`File ${file.name} is not a JPEG image.`);
+        //   return false;
+        // }
         return true;
       });
 
@@ -40,6 +40,9 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     onDrop,
     accept: {
       "image/jpeg": [".jpg", ".jpeg"],
+      "image/png": [".png"],
+      "image/webp": [".webp"],
+      "image/avif": [".avif"],
     },
     multiple: true,
   });

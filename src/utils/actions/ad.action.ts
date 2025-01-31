@@ -1,3 +1,5 @@
+"use server";
+
 import { createClient } from "../supabase/server";
 
 export async function getAds(userId: string | undefined) {
@@ -17,9 +19,43 @@ export async function getAd(id: string) {
 
 export async function getAdMedia(path: string) {
   const supabase = await createClient();
-  const { data: mediaSrc } = await supabase
-    .storage
+  const { data: mediaSrc } = await supabase.storage
     .from("Ads-images")
     .getPublicUrl(path);
   return { mediaSrc };
+}
+
+export async function saveAd(
+  userId: string | undefined,
+  title: string,
+  description: string,
+  filePaths: string[]
+) {
+  const supabase = await createClient();
+  const { data: adData, error: adError } = await supabase
+    .from("Ad")
+    .insert([
+      {
+        title: title,
+        description: description,
+        media_url: JSON.stringify(filePaths),
+        created_by: userId,
+      },
+    ])
+    .select();
+  return { adData, adError };
+}
+
+export async function updateAd(id: string, title: string, description: string) {
+  const supabase = await createClient();
+  console.log(id, title, description);
+  const updateResult = (
+    await supabase
+      .from("Ad")
+      .update({ title, description })
+      .eq("id", id)
+      .select()
+  );
+  console.log(updateResult);
+  return { updateResult };
 }

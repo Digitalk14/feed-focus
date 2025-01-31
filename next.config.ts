@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
     loader: 'custom',
     loaderFile: './supabase-nextjs-image-loader.js',
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
 };
 
 export default nextConfig;

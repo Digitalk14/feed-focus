@@ -1,8 +1,14 @@
 "use client";
 
 import { useState, FormEvent, useEffect } from "react";
-import { Main, ImageUpload, Spinner } from "@/components";
-import { uploadFiles } from "@/utils";
+import {
+  Main,
+  ImageUpload,
+  Spinner,
+  InputText,
+  ButtonRemove,
+} from "@/components";
+import { postAd } from "@/utils";
 import { Bounce, toast } from "react-toastify";
 
 const MAX_FILES = 2;
@@ -13,10 +19,6 @@ export const CreateAdWidget = () => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const notify = () => toast("Wow so easy!");
-  useEffect(() => {
-    // notify();
-  }, []);
 
   const handleFilesSelected = (files: File[]) => {
     setUploadedFiles((prev) => {
@@ -37,7 +39,7 @@ export const CreateAdWidget = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    const { errors } = await uploadFiles(title, description, uploadedFiles);
+    const { errors } = await postAd(title, description, uploadedFiles);
     if (errors) {
       const messages = errors.map((error) => error.message).join(", ");
       toast.error(`Error uploading files: ${messages}`, {
@@ -62,38 +64,18 @@ export const CreateAdWidget = () => {
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-4">Create New Ad</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Name<span className="text-red-500">*</span>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-[#585dff] focus:outline-none focus:ring-1 focus:ring-[#585dff]"
-            />
-          </label>
-
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium text-gray-700 my-4"
-          >
-            Description<span className="text-red-500">*</span>
-            <input
-              type="text"
-              id="description"
-              name="description"
-              required
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-[#585dff] focus:outline-none focus:ring-1 focus:ring-[#585dff]"
-            />
-          </label>
-
+          <InputText
+            name="title"
+            value={title}
+            onChange={setTitle}
+            label="Name"
+          />
+          <InputText
+            name="description"
+            value={description}
+            onChange={setDescription}
+            label="Description"
+          />
           {/* Image previews */}
           <p className="text-sm font-medium text-gray-700 mt-4">
             Upload creatives<span className="text-red-500">*</span>
@@ -127,25 +109,7 @@ export const CreateAdWidget = () => {
                     objectFit: "cover",
                   }}
                 />
-                <button
-                  type="button"
-                  style={{
-                    position: "absolute",
-                    top: "5px",
-                    right: "5px",
-                    fontSize: "20px",
-                    backgroundColor: "white",
-                    borderRadius: "50%",
-                    padding: "5px",
-                    cursor: "pointer",
-                    width: "25px",
-                    height: "25px",
-                  }}
-                  className="absolute -top-2 -right-2 bg-red-500 text-[#333] rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
-                  onClick={() => handleRemoveFile(index)}
-                >
-                  ×
-                </button>
+                <ButtonRemove onClick={() => handleRemoveFile(index)} />
               </div>
             ))}
           </div>

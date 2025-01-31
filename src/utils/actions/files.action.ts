@@ -3,8 +3,9 @@
 import { redirect } from "next/navigation";
 import { FormEvent } from "react";
 import { createClient } from "@/utils";
+import { saveAd } from "./ad.action";
 
-export async function uploadFiles(
+export async function postAd(
   title: string,
   description: string,
   files: File[]
@@ -17,28 +18,24 @@ export async function uploadFiles(
   } = await supabase.auth.getUser();
   await Promise.all(
     files.map(async (file) => {
+      let date = new Date().toISOString();
       const { data, error } = await supabase.storage
         .from("Ads-images")
-        .upload(`public/${file.name}`, file);
+        .upload(`${user?.id}/date=${date}&name=${file.name}`, file);
       if (error) {
         errors.push(error);
-      }else{
+      } else {
         filePaths.push(data);
       }
     })
   );
   if (filePaths.length > 0) {
-    const { data: adData, error: adError } = await supabase
-      .from("Ad")
-      .insert([
-        {
-          title: title,
-          description: description,
-          media_url: JSON.stringify(filePaths),
-          created_by: user?.id,
-        },
-      ])
-      .select();
+    const { adData, adError } = await saveAd(
+      user?.id,
+      title,
+      description,
+      filePaths
+    );
     if (adError) {
       errors.push(adError);
     }

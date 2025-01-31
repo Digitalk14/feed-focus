@@ -4,3 +4,4 @@ export * from "./button";
 export * from "./main";
 export * from "./image-upload";
 export * from "./spinner";
+export * from "./input";
