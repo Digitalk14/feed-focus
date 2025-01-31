@@ -5,3 +5,4 @@ export * from "./main";
 export * from "./image-upload";
 export * from "./spinner";
 export * from "./input";
+export * from "./uploaded-image";

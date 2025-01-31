@@ -7,6 +7,7 @@ import {
   Spinner,
   InputText,
   ButtonRemove,
+  UploadedImage,
 } from "@/components";
 import { postAd } from "@/utils";
 import { Bounce, toast } from "react-toastify";
@@ -88,29 +89,11 @@ export const CreateAdWidget = () => {
               <ImageUpload onFilesSelected={handleFilesSelected} />
             )}
             {uploadedFiles.map((file, index) => (
-              <div
-                key={index}
-                style={{
-                  position: "relative",
-                  maxWidth: "200px",
-                  maxHeight: "300px",
-                  minWidth: "200px",
-                  minHeight: "300px",
-                }}
-                className="relative"
-              >
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt={`Preview ${index + 1}`}
-                  className="max-w-[200px] max-h-[300px] object-cover rounded-lg"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-                <ButtonRemove onClick={() => handleRemoveFile(index)} />
-              </div>
+              <UploadedImage
+                file={file}
+                index={index}
+                handleRemoveFile={handleRemoveFile}
+              />
             ))}
           </div>
           <button

@@ -46,16 +46,18 @@ export async function saveAd(
   return { adData, adError };
 }
 
-export async function updateAd(id: string, title: string, description: string) {
+export async function updateAd(
+  id: string,
+  title: string,
+  description: string,
+  filePaths: string[]
+) {
   const supabase = await createClient();
-  console.log(id, title, description);
-  const updateResult = (
-    await supabase
-      .from("Ad")
-      .update({ title, description })
-      .eq("id", id)
-      .select()
-  );
-  console.log(updateResult);
+  const media_url = JSON.stringify(filePaths);
+  const updateResult = await supabase
+    .from("Ad")
+    .update({ title, description, media_url })
+    .eq("id", id)
+    .select();
   return { updateResult };
 }
