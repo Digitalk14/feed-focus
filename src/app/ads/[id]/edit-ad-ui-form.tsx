@@ -9,9 +9,10 @@ import {
   ImageUpload,
   UploadedImage,
 } from "@/components";
-import { updateAd, extractImageName, uploadFile } from "@/utils";
+import { updateAd, uploadFile, preparePreloadedFiles } from "@/utils";
 import { toast } from "react-toastify";
-
+import { MAX_IMAGES } from "@/lib";
+import { PreloadedImages } from "@/components/image-upload/preloaded-images";
 interface EditAdUIFormProps {
   adId: string;
   title: string;
@@ -60,22 +61,11 @@ export const EditAdUIForm = ({
     return { filePaths };
   };
 
-  const preparePreloadedFiles = () => {
-    const preparedPreloadedFiles = preloadedFiles.map((file: any) => {
-      return {
-        id: file.id,
-        path: file.path,
-        fullPath: file.fullPath,
-      };
-    });
-    return { preparedPreloadedFiles };
-  };
-
   const updateAdHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
     const { filePaths } = await handleAddFiles();
-    const { preparedPreloadedFiles } = preparePreloadedFiles();
+    const { preparedPreloadedFiles } = preparePreloadedFiles(preloadedFiles);
     const allFiles = [...preparedPreloadedFiles, ...filePaths];
     const { updateResult } = await updateAd(
       adId,
@@ -83,7 +73,6 @@ export const EditAdUIForm = ({
       newDescription,
       allFiles
     );
-    console.log(updateResult);
     if (updateResult.status === 200) {
       setIsEditing(false);
     } else {
@@ -98,6 +87,16 @@ export const EditAdUIForm = ({
     );
   };
 
+  const handleRemovePreloadedFile = (indexToRemove: number) => {
+    setPreloadedFiles((prev) =>
+      prev.filter((_, index) => index !== indexToRemove)
+    );
+  };
+  const isSaveButtonDisabled =
+    isLoading ||
+    preloadedFiles.length + uploadedFiles.length < 1 ||
+    newTitle.length < 1 ||
+    newDescription.length < 1;
   return (
     <form onSubmit={updateAdHandler}>
       <div className="w-full mx-auto pl-6 pr-6">
@@ -122,27 +121,27 @@ export const EditAdUIForm = ({
 
         {/* Image gallery */}
         <div className="flex flex-wrap gap-4 mb-6 overflow-x-auto">
-          {isEditing && preloadedFiles.length + uploadedFiles.length < 3 && (
-            <ImageUpload onFilesSelected={handleFilesSelected} />
-          )}
+          {isEditing &&
+            preloadedFiles.length + uploadedFiles.length < MAX_IMAGES && (
+              <ImageUpload onFilesSelected={handleFilesSelected} />
+            )}
           {uploadedFiles.map((file, index) => (
             <UploadedImage
+              key={file.name + index}
               file={file}
               index={index}
               handleRemoveFile={handleRemoveNewFile}
+              isEditing={isEditing}
             />
           ))}
           {preloadedFiles.map((mediaData: any, index: number) => (
-            <div key={mediaData.id} className="relative w-[200px] h-[300px]">
-              <img
-                src={mediaData.signedUrl || ""}
-                alt={`${title} - Image ${index + 1}`}
-                className="object-cover rounded-lg w-full h-full"
-              />
-              <p className="absolute bottom-0 left-0  bg-black-300 text-white px-2 py-1 rounded-lg">
-                {extractImageName(mediaData.path)}
-              </p>
-            </div>
+            <PreloadedImages
+              isEditing={isEditing}
+              handleRemoveFile={handleRemovePreloadedFile}
+              mediaData={mediaData}
+              key={mediaData.id}
+              index={index}
+            />
           ))}
         </div>
         <div className="space-y-4 mb-4">
@@ -161,7 +160,7 @@ export const EditAdUIForm = ({
           </p>
         </div>
         {isEditing ? (
-          <Button type="submit" onClick={() => {}}>
+          <Button disabled={isSaveButtonDisabled} type="submit" onClick={() => {}}>
             {isLoading ? <Spinner /> : "Save"}
           </Button>
         ) : (

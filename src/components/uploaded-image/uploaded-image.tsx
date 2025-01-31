@@ -4,10 +4,12 @@ export const UploadedImage = ({
   file,
   index,
   handleRemoveFile,
+  isEditing,
 }: {
   file: File;
   index: number;
   handleRemoveFile: (index: number) => void;
+  isEditing: boolean;
 }) => {
   return (
     <div
@@ -30,7 +32,9 @@ export const UploadedImage = ({
           objectFit: "cover",
         }}
       />
-      <ButtonRemove onClick={() => handleRemoveFile(index)} />
+      {isEditing && (
+        <ButtonRemove onClick={() => handleRemoveFile(index)} />
+      )}
     </div>
   );
 };

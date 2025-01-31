@@ -11,8 +11,7 @@ import {
 } from "@/components";
 import { postAd } from "@/utils";
 import { Bounce, toast } from "react-toastify";
-
-const MAX_FILES = 2;
+import { MAX_IMAGES } from "@/lib";
 
 export const CreateAdWidget = () => {
   const [title, setTitle] = useState("");
@@ -85,7 +84,7 @@ export const CreateAdWidget = () => {
             className="my-8 flex flex-row gap-4 overflow-x-auto"
             style={{ margin: "10px 0", overflowX: "auto" }}
           >
-            {uploadedFiles.length <= MAX_FILES && (
+            {uploadedFiles.length < MAX_IMAGES && (
               <ImageUpload onFilesSelected={handleFilesSelected} />
             )}
             {uploadedFiles.map((file, index) => (
@@ -93,6 +92,7 @@ export const CreateAdWidget = () => {
                 file={file}
                 index={index}
                 handleRemoveFile={handleRemoveFile}
+                isEditing={true}
               />
             ))}
           </div>
