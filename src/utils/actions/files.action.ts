@@ -62,3 +62,19 @@ export async function getFilesByAuthor(userId: string) {
   );
   return { files, filesError };
 }
+
+export async function deleteFiles(filePaths: string[]) {
+  const supabase = await createClient();
+  console.log(filePaths);
+  const { data: deletionFileResult, error: deletionFileError } =
+    await supabase.storage.from("Ads-images").remove(filePaths);
+  return { deletionFileResult, deletionFileError };
+}
+
+export async function checkFiles() {
+  const supabase = await createClient();
+  const { data: files, error: filesError } = await supabase.storage
+    .from("Ads-images")
+    .list("");
+  return { files, filesError };
+}

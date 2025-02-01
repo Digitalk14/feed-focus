@@ -11,7 +11,7 @@ const Page: FunctionComponent<PropsType> = async function Page({ params }) {
   const { id } = await params;
   const ad = await getAd(id);
   const mediaUrls = ad?.media_url ? JSON.parse(ad.media_url) : [];
-
+  console.log(mediaUrls);
   // Get signed URLs for all images
   const signedUrls = await Promise.all(
     mediaUrls.map(async (mediaData: any) => {

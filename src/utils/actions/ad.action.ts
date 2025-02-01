@@ -4,10 +4,11 @@ import { createClient } from "../supabase/server";
 
 export async function getAds(userId: string | undefined) {
   const supabase = await createClient();
-  const ads = (await supabase.from("Ad").select("*").eq("created_by", userId))
-    .data;
-
-  return ads;
+  const { data: adsList, error: adsListError } = await supabase
+    .from("Ad")
+    .select("*")
+    .eq("created_by", userId);
+  return { adsList, adsListError };
 }
 
 export async function getAd(id: string) {
@@ -60,4 +61,13 @@ export async function updateAd(
     .eq("id", id)
     .select();
   return { updateResult };
+}
+
+export async function deleteAds(ids: string[]) {
+  const supabase = await createClient();
+  const { data: deleteResult, error: deleteError } = await supabase
+    .from("Ad")
+    .delete()
+    .in("id", [ids]);
+  return { deleteResult, deleteError };
 }

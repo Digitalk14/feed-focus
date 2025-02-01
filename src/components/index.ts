@@ -6,3 +6,4 @@ export * from "./image-upload";
 export * from "./spinner";
 export * from "./input";
 export * from "./uploaded-image";
+export * from "./card";
