@@ -5,7 +5,7 @@ export async function getFeeds(userId: string | undefined) {
   const { data: feeds, error: feedsError } = await supabase
     .from("Feed")
     .select("*")
-    .eq("created_by", userId);
+    .eq("user_id", userId);
 
   return { feeds, feedsError };
 }
@@ -15,7 +15,7 @@ export async function getFeed(userId: string | undefined, id: string) {
   const { data: feed, error: feedError } = await supabase
     .from("Feed")
     .select("*")
-    .eq("created_by", userId)
+    .eq("user_id", userId)
     .eq("id", id)
     .single();
 

@@ -7,3 +7,4 @@ export * from "./spinner";
 export * from "./input";
 export * from "./uploaded-image";
 export * from "./card";
+export * from "./drag-card";

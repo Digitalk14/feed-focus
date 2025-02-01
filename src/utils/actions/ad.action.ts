@@ -7,7 +7,7 @@ export async function getAds(userId: string | undefined) {
   const { data: adsList, error: adsListError } = await supabase
     .from("Ad")
     .select("*")
-    .eq("created_by", userId);
+    .eq("user_id", userId);
   return { adsList, adsListError };
 }
 
@@ -40,7 +40,7 @@ export async function saveAd(
         title: title,
         description: description,
         media_url: JSON.stringify(filePaths),
-        created_by: userId,
+        user_id: userId,
       },
     ])
     .select();
