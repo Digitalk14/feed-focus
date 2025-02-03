@@ -1,11 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
 import { DragCard, Ad } from "@/components";
 
-export const AddAdsToFeed = ({ adsList }: { adsList: Ad[] }) => {
-  const [addedAds, setAddedAds] = useState<Ad[]>([]);
+export const AddAdsToFeed = ({
+  adsList,
+  preselectedAds,
+  callback,
+}: {
+  adsList: Ad[];
+  preselectedAds: Ad[] | null;
+  callback: (ads: Ad[]) => void;
+}) => {
+  const [addedAds, setAddedAds] = useState<Ad[]>(preselectedAds || []);
+
+  useEffect(() => {
+    callback(addedAds);
+  }, [addedAds]);
 
   const [{ isOver: isOverSelected }, dropSelected] = useDrop(
     () => ({
@@ -40,7 +52,7 @@ export const AddAdsToFeed = ({ adsList }: { adsList: Ad[] }) => {
   );
 
   return (
-    <div className="flex flex-col gap-2 h-full w-full mt-2">
+    <div className="flex flex-col gap-2 h-full w-full mt-2 mb-4">
       <p className="text-sm text-[#374151]">
         Select ads to add to your feed
         <span className="text-red-500">*</span>

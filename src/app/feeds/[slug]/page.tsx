@@ -1,7 +1,7 @@
 import { getUser, getFeed, getFeedAds } from "@/utils";
 import { FunctionComponent } from "react";
 import { LeftMenu, Main } from "@/components";
-
+import { EditFeedUIForm } from "./edit-feed-ui-form";
 type PropsType = {
   params: Promise<{ slug: string }>;
 };
@@ -19,15 +19,17 @@ const Page: FunctionComponent<PropsType> = async function Page({ params }) {
   if (adsError) {
     console.log(adsError);
   }
-
   return (
     <>
       <LeftMenu />
       <Main>
-        <div>
-          <h1>{feed?.title}</h1>
-          <p>{feed?.description}</p>
-        </div>
+        <EditFeedUIForm
+          feedId={feed?.id}
+          title={feed?.title}
+          description={feed?.description}
+          ads={adsList}
+          userId={user?.id}
+        />
       </Main>
     </>
   );

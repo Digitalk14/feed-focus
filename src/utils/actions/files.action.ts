@@ -65,7 +65,6 @@ export async function getFilesByAuthor(userId: string) {
 
 export async function deleteFiles(filePaths: string[]) {
   const supabase = await createClient();
-  console.log(filePaths);
   const { data: deletionFileResult, error: deletionFileError } =
     await supabase.storage.from("Ads-images").remove(filePaths);
   return { deletionFileResult, deletionFileError };
