@@ -8,6 +8,7 @@ import {
   Spinner,
   ImageUpload,
   UploadedImage,
+  ButtonCancel,
 } from "@/components";
 import { updateAd, uploadFile, preparePreloadedFiles } from "@/utils";
 import { toast } from "react-toastify";
@@ -159,18 +160,29 @@ export const EditAdUIForm = ({
             Updated at: {new Date(updated_at).toLocaleDateString()}
           </p>
         </div>
-        {isEditing ? (
-          <Button disabled={isSaveButtonDisabled} type="submit" onClick={() => {}}>
-            {isLoading ? <Spinner /> : "Save"}
-          </Button>
-        ) : (
-          <div
-            className="flex max-w-60 px-4 py-2 items-center justify-center bg-[#585dff] text-white border border-[#e0e0e0] rounded-lg shadow-sm cursor-pointer"
-            onClick={() => setIsEditing(true)}
-          >
-            Edit
-          </div>
-        )}
+        <div className="flex justify-start gap-4">
+          {isEditing ? (
+            <>
+              <Button
+                disabled={isSaveButtonDisabled}
+                type="submit"
+                onClick={() => {}}
+              >
+                {isLoading ? <Spinner /> : "Save"}
+              </Button>
+              <ButtonCancel onClick={() => setIsEditing(false)}>
+                Cancel
+              </ButtonCancel>
+            </>
+          ) : (
+            <div
+              className="flex max-w-60 px-4 py-2 items-center justify-center bg-[#585dff] text-white border border-[#e0e0e0] rounded-lg shadow-sm cursor-pointer"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </div>
+          )}
+        </div>
       </div>
     </form>
   );

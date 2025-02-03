@@ -5,7 +5,7 @@ import { DndProvider } from "react-dnd";
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Ad, Button, InputText, Spinner } from "@/components";
+import { Ad, Button, ButtonCancel, InputText, Spinner } from "@/components";
 import { AddAdsToFeed } from "@/widgets/add-ads-to-feed";
 import { getAds, updateFeed } from "@/utils";
 import Link from "next/link";
@@ -82,7 +82,7 @@ export const EditFeedUIForm = ({
         ) : (
           <p className="text-gray-700 text-lg">{newDescription}</p>
         )}
-        {isEditing && allAdsList.length && (
+        {isEditing && (
           <AddAdsToFeed
             adsList={allAdsList}
             callback={setSelectedAds}
@@ -106,18 +106,29 @@ export const EditFeedUIForm = ({
             ))}
           </div>
         )}
-        {isEditing ? (
-          <Button disabled={isSubmitDisabled} type="submit" onClick={() => {}}>
-            {isLoading ? <Spinner /> : "Save"}
-          </Button>
-        ) : (
-          <div
-            className="flex max-w-60 px-4 py-2 items-center justify-center bg-[#585dff] text-white border border-[#e0e0e0] rounded-lg shadow-sm cursor-pointer"
-            onClick={() => setIsEditing(true)}
-          >
-            Edit
-          </div>
-        )}
+        <div className="flex justify-start gap-4">
+          {isEditing ? (
+            <>
+              <Button
+                disabled={isSubmitDisabled}
+                type="submit"
+                onClick={() => {}}
+              >
+                {isLoading ? <Spinner /> : "Save"}
+              </Button>
+              <ButtonCancel onClick={() => setIsEditing(false)}>
+                Cancel
+              </ButtonCancel>
+            </>
+          ) : (
+            <div
+              className="flex max-w-60 px-4 py-2 items-center justify-center bg-[#585dff] text-white border border-[#e0e0e0] rounded-lg shadow-sm cursor-pointer"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit
+            </div>
+          )}
+        </div>
       </form>
     </DndProvider>
   );
