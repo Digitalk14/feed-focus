@@ -23,7 +23,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex h-screen bg-gray-50">
+        <div className="flex h-full bg-gray-50">
           <ToastProvider>
             <AuthProvider>{children}</AuthProvider>
           </ToastProvider>

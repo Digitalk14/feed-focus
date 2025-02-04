@@ -8,3 +8,5 @@ export * from "./input";
 export * from "./uploaded-image";
 export * from "./card";
 export * from "./drag-card";
+export * from "./pexel-icon";
+export * from "./nstagram";
