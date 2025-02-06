@@ -1,7 +1,7 @@
 "use client";
 
 import { Ad, AuthorAvatar, LikesCommentsShare } from "@/components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getAdMediaSignedUrl } from "@/utils";
 
 export const AdPost = ({ ad }: { ad: Ad }) => {
@@ -12,7 +12,7 @@ export const AdPost = ({ ad }: { ad: Ad }) => {
   useEffect(() => {
     const fetchUrls = async () => {
       if (imageUrls.length && !images.length) {
-        let paths = imageUrls.map((media: any) => media.path);
+        const paths = imageUrls.map((media: any) => media.path);
         const signedUrls = await getAdMediaSignedUrl(paths);
         setImages(signedUrls);
       }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Content } from "@/utils";
 import { Ad, Post, AdPost } from "@/components";
 
@@ -24,9 +24,8 @@ export const NstagramView = ({
           <Fragment key={photo.id}>
             <Post photo={photo} />
             {(index + 1) % 4 === 0 && (
-                <AdPost ad={adsList[Math.floor(index / 4) % adsList.length]} />
-              )}
-            
+              <AdPost ad={adsList[Math.floor(index / AD_POST_INTERVAL) % adsList.length]} />
+            )}
           </Fragment>
         );
       })}

@@ -1,4 +1,4 @@
-import { createClient, PhotosWithTotalResults, Photo } from "pexels";
+import { createClient, Photo } from "pexels";
 
 export interface Content {
   photos: Photo[];

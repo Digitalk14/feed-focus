@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export default async function AdsPage() {
   const cookieStore = await cookies();
   const userId = cookieStore.get("user_id")?.value || "";
-  const { adsList, adsListError } = await getAds(userId);
+  const { adsList } = await getAds(userId);
   return (
     <>
       <LeftMenu />

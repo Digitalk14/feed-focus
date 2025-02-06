@@ -51,7 +51,8 @@ export const LoginForm = () => {
       </button>
 
       <p className="text-center text-gray-500 mt-8">
-        Don't have an account?{" "}
+        {/* eslint-disable-next-line */}
+        Don't have an account? 
         <Link href="/signup" className="text-[#585DFF] hover:underline">
           Sign Up
         </Link>

@@ -19,7 +19,7 @@ export const CreateFeedWidget = ({ adsList }: { adsList: any[] }) => {
     e.preventDefault();
     setIsLoading(true);
     const adsIds = selectedAds.map((ad) => ad.id);
-    const { createdFeedResult, createdFeedError } = await createFeed(title, description, adsIds);
+    const { createdFeedError } = await createFeed(title, description, adsIds);
     if (createdFeedError) {
       toast.error(JSON.stringify(createdFeedError));
     }

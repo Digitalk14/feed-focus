@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent } from "react";
 import {
   Main,
   ImageUpload,
-  Spinner,
   InputText,
-  ButtonRemove,
   UploadedImage,
   SubmitButton,
 } from "@/components";
@@ -18,7 +16,6 @@ export const CreateAdWidget = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [errors, setErrors] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFilesSelected = (files: File[]) => {
@@ -90,6 +87,7 @@ export const CreateAdWidget = () => {
             )}
             {uploadedFiles.map((file, index) => (
               <UploadedImage
+                key={`${index}-${file.name}`}
                 file={file}
                 index={index}
                 handleRemoveFile={handleRemoveFile}

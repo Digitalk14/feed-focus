@@ -6,7 +6,7 @@ import { saveAd } from "./ad.action";
 
 export async function uploadFile(userId: string, file: File) {
   const supabase = await createClient();
-  let date = new Date().toISOString();
+  const date = new Date().toISOString();
   const { data: fileData, error: fileError } = await supabase.storage
     .from("Ads-images")
     .upload(`${userId}/date=${date}&name=${file.name}`, file);
@@ -38,7 +38,7 @@ export async function postAd(
     })
   );
   if (filePaths.length > 0) {
-    const { adData, adError } = await saveAd(
+    const { adError } = await saveAd(
       user?.id,
       title,
       description,
@@ -55,7 +55,7 @@ export async function postAd(
   }
 }
 
-export async function getFilesByAuthor(userId: string) {
+export async function getFilesByAuthor() {
   const supabase = await createClient();
   const { data: files, error: filesError } = await supabase.storage.getBucket(
     "Ads-images"

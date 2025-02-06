@@ -1,8 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { getUser } from "@/utils";
-import { toast } from "react-toastify";
+import { createContext, useContext, useState } from "react";
 
 interface AuthContextType {
   user: any | null;
@@ -11,7 +9,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<any>(null);
+  const [user] = useState<any>(null);
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );

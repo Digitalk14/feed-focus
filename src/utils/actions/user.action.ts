@@ -2,7 +2,6 @@
 
 import { createClient } from "../supabase/server";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 export async function getUser() {
   const supabase = await createClient();
@@ -16,7 +15,7 @@ export async function getUser() {
 export async function protectRoute() {
   let result = true;
   const { user, userError } = await getUser();
-  if (!user) result = false;
+  if (!user || userError) result = false;
   return result;
 }
 

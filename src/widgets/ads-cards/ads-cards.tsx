@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 
 export const AdsCards = ({ adsList }: { adsList: any[] | null }) => {
   const [adsListState, setAdsListState] = useState<any[] | null>(adsList);
-  if (!adsListState) return null;
   const [selectedAds, setSelectedAds] = useState<any>(null);
+  if (!adsListState) return null;
   const handleCheck = (id: string, checked: boolean) => {
     setSelectedAds((prev: any) => ({ ...prev, [id]: checked }));
   };
@@ -18,14 +18,14 @@ export const AdsCards = ({ adsList }: { adsList: any[] | null }) => {
     const deleteAdsList = adsListState.filter((ad) => selectedAds[ad.id]);
     const imagesPaths = extractImagesPaths(deleteAdsList);
     const deleteIds = deleteAdsList.map((ad) => ad.id);
-    const { deletionFileResult, deletionFileError } = await deleteFiles(
+    const { deletionFileError } = await deleteFiles(
       imagesPaths
     );
     if (deletionFileError) {
       toast.error("Failed to delete files");
     }
     toast.success("Files deleted successfully");
-    const { deleteResult, deleteError } = await deleteAds(deleteIds);
+    const { deleteError } = await deleteAds(deleteIds);
     if (deleteError) {
       toast.error("Failed to delete ads");
     }

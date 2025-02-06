@@ -1,7 +1,6 @@
 "use client";
 
 import { signup } from "@/utils";
-import Link from "next/link";
 import { toast } from "react-toastify";
 
 export const SignupForm = () => {

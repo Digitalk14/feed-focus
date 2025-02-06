@@ -33,7 +33,7 @@ export const EditFeedUIForm = ({
     e.preventDefault();
     setIsLoading(true);
     const adsIds = selectedAds.map((ad) => ad.id);
-    const { updatedFeedResult, updatedFeedError } = await updateFeed(
+    const { updatedFeedError } = await updateFeed(
       feedId,
       newTitle,
       newDescription,
