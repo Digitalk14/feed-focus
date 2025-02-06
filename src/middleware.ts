@@ -1,11 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-const protectedRoutes = [
-  "/dashboard",
-  "/feeds",
-  "/ads",
-];
+const protectedRoutes = ["/dashboard", "/feeds", "/ads"];
 
 export const middleware = async (request: NextRequest) => {
   let supabaseResponse = NextResponse.next({
@@ -36,9 +32,18 @@ export const middleware = async (request: NextRequest) => {
   );
   const pathname = request.nextUrl.pathname;
 
-  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
-  const session = await supabase.auth.getUser();
-  if (isProtectedRoute && session.error) {
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+  const user = await supabase.auth.getUser();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (session) {
+    supabaseResponse.headers.set("X-User-Id", session.user.id);
+    supabaseResponse.cookies.set("user_id", session.user.id);
+  }
+  if (isProtectedRoute && user.error) {
     return NextResponse.redirect(new URL("/login", request.url), {
       status: 303,
     });

@@ -44,7 +44,7 @@ export const SignupForm = () => {
 
       <button
         type="submit"
-        className="w-full py-3 px-4 bg-[#585DFF] text-white rounded-full hover:opacity-90 transition-opacity"
+        className="w-full py-3 px-4 h-12 bg-[#585DFF] text-white rounded-full hover:opacity-90 transition-opacity"
       >
         SIGNUP
       </button>
