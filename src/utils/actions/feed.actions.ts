@@ -18,7 +18,6 @@ export async function getFeed(id: string) {
   const { data: feed, error: feedError } = await supabase
     .from("Feed")
     .select("*")
-    // .eq("user_id", userId)
     .eq("id", id)
     .single();
 

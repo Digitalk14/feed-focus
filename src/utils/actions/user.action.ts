@@ -2,6 +2,7 @@
 
 import { createClient } from "../supabase/server";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function getUser() {
   const supabase = await createClient();
@@ -59,5 +60,10 @@ export async function signup(formData: FormData) {
 export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
+  
+  // Delete user-related cookies
+  const cookieStore = await cookies();
+  cookieStore.delete('user_id');
+  
   redirect("/login");
 }
