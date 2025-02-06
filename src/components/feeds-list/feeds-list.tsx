@@ -2,13 +2,14 @@
 
 import { getFeeds } from "@/utils";
 import Link from "next/link";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 
 export const FeedsList = async () => {
-  const cookieStore = await cookies();
+  // const cookieStore = await cookies();
 
-  const userId = cookieStore.get("user_id")?.value || "";
-  const { feeds, feedsError } = await getFeeds(userId);
+  // const userId = cookieStore.get("user_id")?.value || "";
+  const { feeds, feedsError } = await getFeeds();
+  // const { feeds, feedsError } = await getFeeds(userId);
 
   if (feedsError) {
     console.log(feedsError);

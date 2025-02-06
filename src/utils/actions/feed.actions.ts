@@ -3,12 +3,13 @@
 import { createClient } from "../supabase/server";
 import { getUser } from "@/utils";
 
-export async function getFeeds(userId: string | undefined) {
+export async function getFeeds() {
+// export async function getFeeds(userId: string | undefined) {
   const supabase = await createClient();
   const { data: feeds, error: feedsError } = await supabase
     .from("Feed")
     .select("*")
-    .eq("user_id", userId);
+    // .eq("user_id", userId);
 
   return { feeds, feedsError };
 }
