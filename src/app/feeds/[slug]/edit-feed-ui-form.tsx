@@ -121,11 +121,20 @@ export const EditFeedUIForm = ({
               </ButtonCancel>
             </>
           ) : (
-            <div
-              className="flex max-w-60 px-4 py-2 items-center justify-center bg-[#585dff] text-white border border-[#e0e0e0] rounded-lg shadow-sm cursor-pointer"
-              onClick={() => setIsEditing(true)}
-            >
-              Edit
+            <div className="flex gap-4">
+              <div
+                className="flex max-w-60 px-4 py-2 items-center justify-center bg-[#585dff] text-white border border-[#e0e0e0] rounded-lg shadow-sm cursor-pointer"
+                onClick={() => setIsEditing(true)}
+              >
+                Edit
+              </div>
+              <a
+                target="_blank"
+                href={`${window.location.origin}/content/nstagram/${feedId}`}
+                className="flex max-w-60 px-4 py-2 items-center justify-center bg-[#ffffff] text-[#585dff] border border-[#585dff] rounded-lg shadow-sm cursor-pointer"
+              >
+                Check Feed
+              </a>
             </div>
           )}
         </div>

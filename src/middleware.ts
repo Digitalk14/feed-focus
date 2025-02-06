@@ -4,8 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 const protectedRoutes = [
   "/dashboard",
   "/feeds",
-  "/feeds/create",
-  "/ads/create",
+  "/ads",
 ];
 
 export const middleware = async (request: NextRequest) => {
@@ -37,7 +36,7 @@ export const middleware = async (request: NextRequest) => {
   );
   const pathname = request.nextUrl.pathname;
 
-  const isProtectedRoute = protectedRoutes.includes(pathname);
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
   const session = await supabase.auth.getUser();
   if (isProtectedRoute && session.error) {
     return NextResponse.redirect(new URL("/login", request.url), {

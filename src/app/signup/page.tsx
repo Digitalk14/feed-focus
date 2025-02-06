@@ -1,4 +1,4 @@
-import { LoginForm } from "@/widgets";
+import { SignupForm } from "@/widgets";
 
 export default function LoginPage() {
   return (
@@ -7,7 +7,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-semibold mb-4">Welcome</h1>
         </div>
-        <LoginForm />
+        <SignupForm />
       </div>
     </div>
   );

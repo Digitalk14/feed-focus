@@ -31,7 +31,7 @@ export async function login(formData: FormData) {
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(data);
   if (error) {
-    redirect("/error");
+    return { loginResult: null, loginError: error };
   }
 
   // revalidatePath('/', 'layout')
@@ -47,12 +47,13 @@ export async function signup(formData: FormData) {
   };
   const supabase = await createClient();
   const { error } = await supabase.auth.signUp(data);
-
+  console.log(error);
   if (error) {
-    redirect("/error");
+    console.log(error);
+    return { signupResult: null, signupError: error };
   }
 
-  revalidatePath("/", "layout");
+  // revalidatePath("/", "layout");
   redirect("/dashboard");
 }
 

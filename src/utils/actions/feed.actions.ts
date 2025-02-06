@@ -13,12 +13,12 @@ export async function getFeeds(userId: string | undefined) {
   return { feeds, feedsError };
 }
 
-export async function getFeed(userId: string | undefined, id: string) {
+export async function getFeed(id: string) {
   const supabase = await createClient();
   const { data: feed, error: feedError } = await supabase
     .from("Feed")
     .select("*")
-    .eq("user_id", userId)
+    // .eq("user_id", userId)
     .eq("id", id)
     .single();
 

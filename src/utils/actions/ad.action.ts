@@ -26,6 +26,16 @@ export async function getAdMedia(path: string) {
   return { mediaSrc };
 }
 
+export async function getAdMediaSignedUrl(paths: string[]) {
+  const signedUrls = await Promise.all(
+    paths.map(async (path) => {
+      const { mediaSrc } = await getAdMedia(path);
+      return { path, signedUrl: mediaSrc.publicUrl };
+    })
+  );
+  return signedUrls;
+}
+
 export async function saveAd(
   userId: string | undefined,
   title: string,

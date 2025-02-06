@@ -1,11 +1,12 @@
-import { LeftMenu, ButtonCreateNew, Main, Card } from "@/components";
-import { getUser, getAds } from "@/utils";
-import Link from "next/link";
+import { LeftMenu, ButtonCreateNew, Main } from "@/components";
+import { getAds } from "@/utils";
 import { AdsCards } from "@/widgets";
+import { cookies } from "next/headers";
 
 export default async function AdsPage() {
-  const { user, userError } = await getUser();
-  const { adsList, adsListError } = await getAds(user?.id);
+  const cookieStore = await cookies();
+  const userId = cookieStore.get("user_id")?.value || "";
+  const { adsList, adsListError } = await getAds(userId);
   return (
     <>
       <LeftMenu />

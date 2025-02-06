@@ -1,4 +1,4 @@
-import { getContent, getFeed, getFeedAds, getUser } from "@/utils";
+import { getContent, getFeed, getFeedAds } from "@/utils";
 import { NstagramView } from "@/widgets";
 
 type PropsType = {
@@ -7,8 +7,7 @@ type PropsType = {
 
 export default async function InstagramContent({ params }: PropsType) {
   const { id } = await params;
-  const { user, userError } = await getUser();
-  const { feed, feedError } = await getFeed(user?.id, id);
+  const { feed, feedError } = await getFeed(id);
   if (feedError || !feed) {
     return <div>No feed found</div>;
   }
