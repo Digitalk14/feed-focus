@@ -26,5 +26,5 @@ export default async function InstagramContent({ params }: PropsType) {
   if (!content.photos) {
     return <ErrorView title="No content found" description="Please add some content." />;
   }
-  return <NstagramView content={content} adsList={adsList} />;
+  return <NstagramView content={content} adsList={adsList} feed={feed} />;
 }

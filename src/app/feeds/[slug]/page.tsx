@@ -17,7 +17,7 @@ const Page: FunctionComponent<PropsType> = async function Page({ params }) {
   }
   const { slug } = await params;
   const { feed, feedError } = await getFeed(slug);
-
+  
   if (feedError) {
     return (
       <ErrorView
@@ -44,6 +44,7 @@ const Page: FunctionComponent<PropsType> = async function Page({ params }) {
           feedId={feed?.id}
           title={feed?.title}
           description={feed?.description}
+          companyName={feed?.company_name}
           ads={adsList}
           userId={userId}
         />

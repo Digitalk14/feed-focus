@@ -4,7 +4,7 @@ import { Ad, AuthorAvatar, LikesCommentsShare } from "@/components";
 import { useEffect, useState } from "react";
 import { getAdMediaSignedUrl } from "@/utils";
 
-export const AdPost = ({ ad }: { ad: Ad }) => {
+export const AdPost = ({ ad, companyName }: { ad: Ad, companyName: string }) => {
   const [images, setImages] = useState<{ path: string; signedUrl: string }[]>(
     []
   );
@@ -68,7 +68,7 @@ export const AdPost = ({ ad }: { ad: Ad }) => {
             zIndex: 2,
           }}
         >
-          <AuthorAvatar author={"H&M"} sponsored={true} avatarColor={"#3797f1"} />
+          <AuthorAvatar author={companyName} sponsored={true} avatarColor={"#3797f1"} />
         </div>
         <div 
           className="overflow-hidden"

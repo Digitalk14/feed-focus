@@ -37,6 +37,7 @@ export async function getFeedAds(list: string[]) {
 export async function createFeed(
   title: string,
   description: string,
+  companyName: string,
   ads: string[]
 ) {
   const { user, userError } = await getUser();
@@ -46,7 +47,7 @@ export async function createFeed(
   const supabase = await createClient();
   const { data: createdFeedResult, error: createdFeedError } = await supabase
     .from("Feed")
-    .insert({ user_id: user.id, title, description, ads });
+    .insert({ user_id: user.id, title, description, company_name: companyName, ads });
   return { createdFeedResult, createdFeedError };
 }
 
@@ -54,12 +55,13 @@ export async function updateFeed(
   feedId: string,
   title: string,
   description: string,
+  companyName: string,
   ads: string[]
 ) {
   const supabase = await createClient();
   const { data: updatedFeedResult, error: updatedFeedError } = await supabase
     .from("Feed")
-    .update({ title, description, ads })
+    .update({ title, description, company_name: companyName, ads })
     .eq("id", feedId);
   return { updatedFeedResult, updatedFeedError };
 }

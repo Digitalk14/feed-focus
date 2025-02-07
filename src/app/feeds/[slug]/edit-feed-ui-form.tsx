@@ -14,12 +14,14 @@ export const EditFeedUIForm = ({
   feedId,
   title,
   description,
+  companyName,
   ads,
   userId,
 }: {
   feedId: string;
   title: string;
   description: string;
+  companyName: string;
   ads: any[] | null;
   userId: string | undefined;
 }) => {
@@ -27,6 +29,7 @@ export const EditFeedUIForm = ({
   const [isLoading, setIsLoading] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
+  const [newCompanyName, setNewCompanyName] = useState(companyName);
   const [allAdsList, setAllAdsList] = useState<Ad[]>([]);
   const [selectedAds, setSelectedAds] = useState<Ad[]>(ads || []);
   const updateFeedHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,6 +44,7 @@ export const EditFeedUIForm = ({
       feedId,
       newTitle,
       newDescription,
+      newCompanyName,
       adsIds
     );
     if (updatedFeedError) {
@@ -50,7 +54,8 @@ export const EditFeedUIForm = ({
     toast.success("Feed created successfully");
     redirect("/feeds");
   };
-  const isSubmitDisabled = !newTitle || !newDescription || !selectedAds.length;
+  const isSubmitDisabled =
+    !newTitle || !newDescription || !selectedAds.length || !newCompanyName;
   useEffect(() => {
     const fetchAds = async () => {
       if (isEditing && !allAdsList.length) {
@@ -74,7 +79,7 @@ export const EditFeedUIForm = ({
             label="Title"
           />
         ) : (
-          <h1 className="text-3xl font-bold">{newTitle}</h1>
+          <h1 className="text-3xl font-bold">Title: {newTitle}</h1>
         )}
         {isEditing ? (
           <InputText
@@ -84,7 +89,17 @@ export const EditFeedUIForm = ({
             label="Description"
           />
         ) : (
-          <p className="text-gray-700 text-lg">{newDescription}</p>
+          <p className="text-gray-700 text-lg">Description: {newDescription}</p>
+        )}
+        {isEditing ? (
+          <InputText
+            name="companyName"
+            value={newCompanyName}
+            onChange={(value) => setNewCompanyName(value)}
+            label="Company Name"
+          />
+        ) : (
+          <p className="text-gray-700 text-lg">Company Name: {newCompanyName}</p>
         )}
         {isEditing && (
           <AddAdsToFeed

@@ -10,9 +10,11 @@ const AD_POST_INTERVAL = 3 + 1;
 export const NstagramView = ({
   content,
   adsList,
+  feed,
 }: {
   content: Content;
   adsList: Ad[];
+  feed: any;
 }) => {
   if (!adsList.length) {
     return (
@@ -22,6 +24,7 @@ export const NstagramView = ({
       />
     );
   }
+  console.log(feed);
   return (
     <div
       className="flex flex-col max-w-[600px] mx-auto bg-white"
@@ -36,6 +39,7 @@ export const NstagramView = ({
                 ad={
                   adsList[Math.floor(index / AD_POST_INTERVAL) % adsList.length]
                 }
+                companyName={feed?.company_name}
               />
             )}
           </Fragment>
