@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function LoginPage() {
   return (
     <div className="flex w-full min-h-screen items-center justify-center bg-gray-50">
