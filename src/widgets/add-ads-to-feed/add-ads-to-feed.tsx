@@ -17,7 +17,7 @@ export const AddAdsToFeed = ({
 
   useEffect(() => {
     callback(addedAds);
-  }, [addedAds]);
+  }, [addedAds, callback]);
 
   const [{ isOver: isOverSelected }, dropSelected] = useDrop(
     () => ({

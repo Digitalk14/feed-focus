@@ -67,7 +67,7 @@ export const EditFeedUIForm = ({
       }
     };
     fetchAds();
-  }, [isEditing, allAdsList]);
+  }, [isEditing, allAdsList, userId]);
   return (
     <DndProvider backend={HTML5Backend}>
       <form onSubmit={updateFeedHandler}>
