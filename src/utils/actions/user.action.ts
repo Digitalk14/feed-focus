@@ -47,14 +47,10 @@ export async function signup(formData: FormData) {
   };
   const supabase = await createClient();
   const { error } = await supabase.auth.signUp(data);
-  console.log(error);
   if (error) {
-    console.log(error);
     return { signupResult: null, signupError: error };
   }
-
-  // revalidatePath("/", "layout");
-  redirect("/dashboard");
+  redirect("/signup/check-email");
 }
 
 export async function logout() {
