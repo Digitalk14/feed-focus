@@ -1,5 +1,11 @@
 "use client";
+import { ErrorView } from "@/widgets";
 
 export default function ErrorPage() {
-  return <p>Sorry, something went wrong</p>;
+  return (
+    <ErrorView
+      title="Sorry, something went wrong"
+      description="Please try again later."
+    />
+  );
 }

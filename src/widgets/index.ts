@@ -4,3 +4,4 @@ export * from "./create-feed";
 export * from "./add-ads-to-feed";
 export * from "./nstagram-view";
 export * from "./form";
+export * from "./error-view";

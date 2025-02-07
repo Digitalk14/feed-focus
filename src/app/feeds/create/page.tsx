@@ -1,6 +1,6 @@
 import { LeftMenu } from "@/components";
 import { getAds } from "@/utils";
-import { CreateFeedWidget } from "@/widgets";
+import { CreateFeedWidget, ErrorView } from "@/widgets";
 import { cookies } from "next/headers";
 
 export default async function CreateAdPage() {
@@ -8,7 +8,7 @@ export default async function CreateAdPage() {
   const userId = cookieStore.get("user_id")?.value || "";
   const { adsList, adsListError } = await getAds(userId);
   if (adsListError || !adsList) {
-    return <div>No ads found, try to create one</div>;
+    return <ErrorView title="No ads found" description="Try to create one" />;
   }
   return (
     <>

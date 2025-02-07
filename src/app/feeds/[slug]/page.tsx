@@ -3,6 +3,7 @@ import { FunctionComponent } from "react";
 import { LeftMenu, Main } from "@/components";
 import { EditFeedUIForm } from "./edit-feed-ui-form";
 import { cookies } from "next/headers";
+import { ErrorView } from "@/widgets";
 
 type PropsType = {
   params: Promise<{ slug: string }>;
@@ -18,12 +19,22 @@ const Page: FunctionComponent<PropsType> = async function Page({ params }) {
   const { feed, feedError } = await getFeed(slug);
 
   if (feedError) {
-    console.log(feedError);
+    return (
+      <ErrorView
+        title="Sorry, something went wrong"
+        description="Please try again later."
+      />
+    );
   }
   const { adsList, adsError } = await getFeedAds(feed?.ads);
 
   if (adsError) {
-    console.log(adsError);
+    return (
+      <ErrorView
+        title="Sorry, something went wrong"
+        description="Please try again later."
+      />
+    );
   }
   return (
     <>

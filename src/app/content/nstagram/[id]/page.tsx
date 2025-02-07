@@ -1,5 +1,5 @@
 import { getContent, getFeed, getFeedAds } from "@/utils";
-import { NstagramView } from "@/widgets";
+import { NstagramView, ErrorView } from "@/widgets";
 
 type PropsType = {
   params: Promise<{ id: string }>;
@@ -15,11 +15,16 @@ export default async function InstagramContent({ params }: PropsType) {
   const { adsList, adsError } = await getFeedAds(feed?.ads);
 
   if (adsError || !adsList) {
-    return <div>No ads found</div>;
+    return (
+      <ErrorView
+        title="No ads was added to this feed"
+        description="Please add some ads."
+      />
+    );
   }
 
   if (!content.photos) {
-    return <div>No content found</div>;
+    return <ErrorView title="No content found" description="Please add some content." />;
   }
   return <NstagramView content={content} adsList={adsList} />;
 }

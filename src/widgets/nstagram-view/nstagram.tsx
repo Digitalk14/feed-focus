@@ -3,6 +3,7 @@
 import React, { Fragment } from "react";
 import { Content } from "@/utils";
 import { Ad, Post, AdPost } from "@/components";
+import { ErrorView } from "@/widgets";
 
 const AD_POST_INTERVAL = 3 + 1;
 
@@ -14,7 +15,12 @@ export const NstagramView = ({
   adsList: Ad[];
 }) => {
   if (!adsList.length) {
-    return <div>No ads was added to this feed. Please add some ads.</div>;
+    return (
+      <ErrorView
+        title="No ads was added to this feed"
+        description="Please add some ads."
+      />
+    );
   }
   return (
     <div
@@ -26,7 +32,11 @@ export const NstagramView = ({
           <Fragment key={photo.id}>
             <Post photo={photo} />
             {(index + 1) % 4 === 0 && (
-              <AdPost ad={adsList[Math.floor(index / AD_POST_INTERVAL) % adsList.length]} />
+              <AdPost
+                ad={
+                  adsList[Math.floor(index / AD_POST_INTERVAL) % adsList.length]
+                }
+              />
             )}
           </Fragment>
         );
