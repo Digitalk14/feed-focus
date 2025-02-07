@@ -33,6 +33,10 @@ export const EditFeedUIForm = ({
     e.preventDefault();
     setIsLoading(true);
     const adsIds = selectedAds.map((ad) => ad.id);
+    if (!adsIds.length) {
+      toast.error("Please select at least one ad");
+      return;
+    }
     const { updatedFeedError } = await updateFeed(
       feedId,
       newTitle,
@@ -46,7 +50,7 @@ export const EditFeedUIForm = ({
     toast.success("Feed created successfully");
     redirect("/feeds");
   };
-  const isSubmitDisabled = !newTitle || !newDescription;
+  const isSubmitDisabled = !newTitle || !newDescription || !selectedAds.length;
   useEffect(() => {
     const fetchAds = async () => {
       if (isEditing && !allAdsList.length) {

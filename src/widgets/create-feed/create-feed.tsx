@@ -11,12 +11,16 @@ import { redirect } from "next/navigation";
 
 
 export const CreateFeedWidget = ({ adsList }: { adsList: any[] }) => {
-  const [title, setTitle] = useState("New Feed");
-  const [description, setDescription] = useState("New Feed Description");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [selectedAds, setSelectedAds] = useState<Ad[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!selectedAds.length) {
+      toast.error("Please select at least one ad");
+      return;
+    }
     setIsLoading(true);
     const adsIds = selectedAds.map((ad) => ad.id);
     const { createdFeedError } = await createFeed(title, description, adsIds);
@@ -28,7 +32,7 @@ export const CreateFeedWidget = ({ adsList }: { adsList: any[] }) => {
     redirect("/feeds");
   };
 
-  const isSubmitDisabled = !title || !description;
+  const isSubmitDisabled = !title || !description || !selectedAds.length;
 
   return (
     <>
