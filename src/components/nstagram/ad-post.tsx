@@ -24,10 +24,12 @@ export const AdPost = ({ ad, companyName }: { ad: Ad, companyName: string }) => 
   }, [imageUrls, images]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
     setTouchStart(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
