@@ -15,8 +15,8 @@ export const NstagramView = ({
 }) => {
   return (
     <div
-      className="flex flex-col gap-4 max-w-[600px] mx-auto bg-white"
-      style={{ maxWidth: "600px" }}
+      className="flex flex-col max-w-[600px] mx-auto bg-white"
+      style={{ maxWidth: "600px", gap: "30px" }}
     >
       {content.photos.map((photo, index) => {
         // const nextAd = getNextAd(index);

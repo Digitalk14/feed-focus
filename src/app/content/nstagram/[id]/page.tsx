@@ -8,7 +8,6 @@ type PropsType = {
 export default async function InstagramContent({ params }: PropsType) {
   const { id } = await params;
   const { feed, feedError } = await getFeed(id);
-  console.log("FEED ERROR", feedError)
   if (feedError || !feed) {
     return <div>No feed found</div>;
   }

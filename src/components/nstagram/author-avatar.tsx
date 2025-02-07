@@ -1,12 +1,14 @@
 export const AuthorAvatar = ({
   author,
   sponsored,
+  avatarColor,
 }: {
   author: string;
   sponsored?: boolean;
+  avatarColor?: string;
 }) => {
   // Generate random HSL color for consistent, pleasing colors
-  const randomColor = `hsl(${Math.random() * 360}, 70%, 80%)`;
+  const randomColor = avatarColor ?? `hsl(${Math.random() * 360}, 70%, 80%)`;
 
   return (
     <div className="flex items-center gap-2" style={{ color: "white" }}>
