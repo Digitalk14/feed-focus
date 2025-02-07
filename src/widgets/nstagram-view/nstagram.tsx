@@ -13,13 +13,15 @@ export const NstagramView = ({
   content: Content;
   adsList: Ad[];
 }) => {
+  if (!adsList.length) {
+    return <div>No ads was added to this feed. Please add some ads.</div>;
+  }
   return (
     <div
       className="flex flex-col max-w-[600px] mx-auto bg-white"
       style={{ maxWidth: "600px", gap: "30px" }}
     >
       {content.photos.map((photo, index) => {
-        // const nextAd = getNextAd(index);
         return (
           <Fragment key={photo.id}>
             <Post photo={photo} />
